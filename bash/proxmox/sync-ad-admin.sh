@@ -1,12 +1,17 @@
 #!/bin/bash
+# =============================================================================
+# Auteur   : Dev-Enzo
+# Date     : 15-07-2025
+# Contact  : support@dev-enzo.ovh
+# Projet   : Synchronisation AD -> Proxmox
+# Description :
+#   Script Bash pour synchroniser les utilisateurs d'un groupe Active Directory
+#   vers un groupe local Proxmox.
+# =============================================================================
 
 # === CONFIGURATION ===
-AD_SERVER=""                    # Nom ou IP de ton contrôleur AD
-BIND_DN=""               # Compte autorisé à lire l’AD (compte@domaine.local)
-BIND_PW=$(cat /root/.ldap_pass)                         # Mot de passe du compte 
-GROUP_DN=""  # DN complet du groupe
-REALM=""                          # Nom du realm configuré dans Proxmox
-PROXMOX_GROUP=""                    # Groupe local Proxmox cible
+# Charger la config
+source ./config_sync-ad-admin.sh
 
 # === SYNCHRONISATION ===
 
