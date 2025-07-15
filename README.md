@@ -8,7 +8,7 @@ Ce dépôt me sert de boîte à outils personnelle pour gagner du temps et docum
 bash
 scripts/
 
-├── bash[bash](https://github.com/devenzopro/main/tree/scripts/bash)/             # Scripts pour Linux (installations, réseau, maintenance)
+├── [bash](https://github.com/devenzopro/main/tree/scripts/bash)/             # Scripts pour Linux (installations, réseau, maintenance)
 
 ├── powershell/       # Scripts pour Windows (post-installation, sécurité, AD)
 
