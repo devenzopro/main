@@ -8,8 +8,8 @@
 - [NitroHebergeur](https://client.nitrohebergeur.fr)
 
 ## 🧪 Tests techniques
-> Tous mes scripts : [voir le dépôt](https://github.com/devenzopro/scripts)
+> Tous mes scripts : [voir le dépôt](https://github.com/devenzopro/main/tree/scripts))
 
-> Tous mes Test : [voir le dépôt](https://github.com/devenzopro/Tests)
+> Tous mes test : [voir le dépôt](https://github.com/devenzopro/main/tree/test))
 
 📄 [Mon CV PDF](./cv-enzo.pdf)
