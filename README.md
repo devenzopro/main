@@ -7,8 +7,14 @@ Ce dépôt me sert de boîte à outils personnelle pour gagner du temps et docum
 
 bash
 scripts/
+
 ├── bash[bash](https://github.com/devenzopro/main/tree/scripts/bash)/             # Scripts pour Linux (installations, réseau, maintenance)
+
 ├── powershell/       # Scripts pour Windows (post-installation, sécurité, AD)
+
 ├── python/           # Petits outils et parseurs en Python
+
 ├── batch/            # Scripts Windows .bat simples
+
 └── utils/            # Autres scripts ou fragments utiles (sh, zsh, etc.)
+
