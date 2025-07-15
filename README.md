@@ -1,15 +1,14 @@
-# Salut ! Moi c’est Dev-Enzo 🚀
+# 📜 Dépôt : Scripts
 
-🎓 Étudiant en systèmes d'information  
-🛠️ Technicien et développeur passionné  
-🔐 Sécurité, réseaux, hébergement, serveurs...
+Bienvenue dans ma collection de **scripts techniques** utilisés pour mes tests, automatisations ou outils du quotidien.  
+Ce dépôt me sert de boîte à outils personnelle pour gagner du temps et documenter mes approches.
 
-## 🌍 Projets publics
-- [NitroHebergeur](https://client.nitrohebergeur.fr)
+## 📂 Structure du dépôt
 
-## 🧪 Tests techniques
-> Tous mes scripts : [voir le dépôt](https://github.com/devenzopro/scripts)
-
-> Tous mes Test : [voir le dépôt](https://github.com/devenzopro/Tests)
-
-📄 [Mon CV PDF](./cv-enzo.pdf)
+```bash
+scripts/
+├── bash/             # Scripts pour Linux (installations, réseau, maintenance)
+├── powershell/       # Scripts pour Windows (post-installation, sécurité, AD)
+├── python/           # Petits outils et parseurs en Python
+├── batch/            # Scripts Windows .bat simples
+└── utils/            # Autres scripts ou fragments utiles (sh, zsh, etc.)
