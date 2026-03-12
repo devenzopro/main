@@ -71,26 +71,18 @@ echo "[*] Configuré pour l'utilisateur root"
 
 # 3. Appliquer aux utilisateurs existants (dans /home)
 for user_home in /home/*; do
-    # Vérifie que c'est bien un répertoire et pas un fichier
     if [ -d "$user_home" ]; then
         user_name=$(basename "$user_home")
         user_bashrc="$user_home/.bashrc"
-
-        # Vérifie si le fichier .bashrc existe avant d'écrire
-        if [ -f "$user_bashrc" ]; then
-            # On vérifie si le dashboard est déjà présent
-            if ! grep -q "DASHBOARD DEV-ENZO" "$user_bashrc"; then
-                echo -e "\n$DASHBOARD_CONTENT" >> "$user_bashrc"
-                
-                # Correction cruciale : Réattribuer la propriété à l'utilisateur
-                # On utilise l'ID de l'utilisateur pour éviter les erreurs de groupe
-                chown "$user_name":"$user_name" "$user_bashrc" 2>/dev/null || chown "$user_name" "$user_bashrc"
-                
-                echo "[OK] Dashboard ajouté pour : $user_name"
-            else
-                echo "[SKIP] Déjà présent pour : $user_name"
-            fi
-        fi
+        
+        # 1. On ajoute le contenu proprement
+        echo "$DASHBOARD_CONTENT" >> "$user_bashrc"
+        
+        # 2. IMPORTANT : On redonne la propriété à l'utilisateur
+        # Sans cette ligne, l'utilisateur ne pourra plus modifier son fichier
+        chown "$user_name":"$user_name" "$user_bashrc"
+        
+        echo "Dashboard ajouté pour $user_name"
     fi
 done
 
