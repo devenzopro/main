@@ -41,7 +41,8 @@ echo "" > $MOTD_PATH
 
 # On ajoute le Dashboard dans le .bashrc pour qu'il s'affiche à chaque login
 # On utilise une fonction pour que les couleurs et commandes soient propres
-cat << 'EOF' >> /root/.bashrc
+# Le contenu du dashboard
+DASHBOARD_CONTENT=$(cat << 'EOF'
 
 # --- DASHBOARD DEV-ENZO ---
 JAUNE='\033[1;33m'; VERT='\033[1;32m'; BLEU='\033[1;34m'; ROUGE='\033[1;31m'; NC='\033[0m'
@@ -57,6 +58,31 @@ echo -e "IP Locale   : $(hostname -I | awk '{print $1}')"
 echo -e "IP Publique : $(curl -s https://ifconfig.me || echo 'Hors ligne')"
 echo -e "${BLEU}================================================${NC}"
 EOF
+)
+
+# 1. Appliquer aux futurs utilisateurs (le dossier /etc/skel)
+# Tout ce qui est ici est copié automatiquement dans le home des nouveaux comptes.
+echo "$DASHBOARD_CONTENT" >> /etc/skel/.bashrc
+echo "[*] Configuré pour les futurs utilisateurs (/etc/skel)"
+
+# 2. Appliquer à l'utilisateur root
+echo "$DASHBOARD_CONTENT" >> /root/.bashrc
+echo "[*] Configuré pour l'utilisateur root"
+
+# 3. Appliquer aux utilisateurs existants (dans /home)
+for user_home in /home/*; do
+    if [ -d "$user_home" ]; then
+        user_bashrc="$user_home/.bashrc"
+        # On vérifie si ce n'est pas déjà ajouté
+        if ! grep -q "DASHBOARD DEV-ENZO" "$user_bashrc"; then
+            echo "$DASHBOARD_CONTENT" >> "$user_bashrc"
+            # On s'assure que l'utilisateur reste propriétaire de son fichier
+            chown $(basename "$user_home"):$(basename "$user_home") "$user_bashrc"
+            echo "[*] Configuré pour $(basename "$user_home")"
+        fi
+    fi
+done
+
 
 # --- 3. CONFIGURATION SSH ---
 echo "Configuration du service SSH..."
