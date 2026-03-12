@@ -19,7 +19,8 @@ ufw default allow outgoing
 
 # Questions pour les autres services
 ask_port() {
-    read -p "Autoriser $1 ($2) ? (y/N) : " res
+    # On ajoute </dev/tty pour forcer la lecture depuis ton clavier
+    read -p "Autoriser $1 ($2) ? (y/n) : " res </dev/tty
     if [[ "$res" =~ ^[yY]$ ]]; then
         ufw allow "$1"
         echo -e "${VERT}Port $1 autorisé.${NC}"
