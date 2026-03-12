@@ -38,6 +38,13 @@ ask_port "53" "DNS"
 ufw --force enable
 echo -e "${VERT}Pare-feu UFW activé !${NC}"
 
+if command -v sudo >/dev/null 2>&1; then
+    # Si sudo est installé
+    sudo ufw status verbose
+else
+    # Si sudo n'est pas installé (on est probablement déjà en root)
+    ufw status verbose
+fi
 # --- Message de fin corrigé ---
 echo -e "${BLEU}------------------------------------------------${NC}"
 echo -e "${VERT}  Configuration terminée avec succès !          ${NC}"
