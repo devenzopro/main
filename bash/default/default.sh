@@ -26,13 +26,13 @@ run_step() {
     
     if [[ "$choix" =~ ^[yY]$ ]]; then
         echo -e "${VERT}Exécution de ${NOM_PARTIE}...${NC}"
-        curl -sSL "$URL_PARTIE" | sudo bash
+        #curl -sSL "$URL_PARTIE" | sudo bash
         if command -v sudo >/dev/null 2>&1; then
             # Si sudo est installé
-            sudo ufw status verbose
+            curl -sSL "$URL_PARTIE" | sudo bash
         else
             # Si sudo n'est pas installé (on est probablement déjà en root)
-            ufw status verbose
+            curl -sSL "$URL_PARTIE" | bash
         fi
     else
         echo -e "${ROUGE}Étape ${NOM_PARTIE} sautée.${NC}"
