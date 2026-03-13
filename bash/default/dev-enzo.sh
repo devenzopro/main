@@ -45,6 +45,9 @@ run_step "BANNER & DASHBOARD" "https://raw.githubusercontent.com/devenzopro/main
 # --- ÉTAPE 2 : PARE-FEU UFW ---
 run_step "SÉCURITÉ PARE-FEU (UFW)" "https://raw.githubusercontent.com/devenzopro/main/scripts/bash/default/ufw.sh"
 
+# --- ÉTAPE 3 :  Gestion Password Compte Local ---
+rune_step "Gestion Password Compte Local" "https://raw.githubusercontent.com/devenzopro/main/scripts/bash/default/manage_password_all_accounts.sh"
+
 # --- Message de Fin ---
 echo -e "\n${BLEU}------------------------------------------------${NC}"
 echo -e "${VERT}      CONFIGURATION SÉCURISÉE TERMINÉE !        ${NC}"
