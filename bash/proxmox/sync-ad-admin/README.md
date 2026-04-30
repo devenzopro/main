@@ -19,7 +19,7 @@ Il est conçu pour automatiser la gestion des droits d’accès utilisateurs dan
 ```bash
 sync-ad-admin/
 ├── sync-ad-admin.sh    # Script principal
-├── sync-ad-admin.sh    # Fichier de configuration
+├── config.sh    # Fichier de configuration
 └── README.md           # Documentation
 ```
 ---
@@ -76,3 +76,8 @@ Expression                cron	Signification
 0 1 * * 1	                Tous les lundis à 01:00
 0 1 */2 * *             	Tous les 2 jours à 01:00
 ```
+Pour information : 
+
+Proxmox Active Direcory Server : User Filter ```(memberOf:1.2.840.113556.1.4.1941:=CN=GG_ADMIN-PVE_CBG*,OU=TIER1,OU=GROUPES,OU=Comptes de delegation,DC=domaine,DC=fr)``` pausibilé d'en maitre a la suite
+Proxmox Active Direcory Server : User Filter ```(&(objectClass=group)(cn=GG_ADMIN-PVE*))```
+
