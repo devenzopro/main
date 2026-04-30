@@ -37,6 +37,11 @@ Le realm AD doit déjà être configuré dans Proxmox
 Paquet ldap-utils installé (apt install ldap-utils)
 Un compte AD ayant les droits de lecture LDAP
 
+```
+apt update
+apt install ldap-utils -y
+```
+
 ---
 ## 🧠 Astuce
 
