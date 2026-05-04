@@ -50,6 +50,8 @@ Ce script peut être planifié avec cron pour une mise à jour régulière :
 ```0 * * * * /root/sync-ad-admin/sync-ad-admin.sh >> /var/log/sync-ad.log 2>&1```
 
 ✅ Signification détaillée (cron)
+crontab-generator.org : vous n'avez qu'à sélectionner vos besoins pour la fréquence d'exécution et l'outil va générer la bonne ligne de crontab.
+crontab.guru : vous pouvez indiquer votre ligne de crontab (sans la commande) et l'outil va la traduire sous forme de texte. C'est très pratique pour vérifier la syntaxe de la tâche cron.
 ```
 *    *    *    *    * /root/sync-ad-admin/sync-ad-admin.sh >> /var/log/sync-ad.log 2>&1
 │    │    │    │    │
