@@ -26,7 +26,7 @@ Avant de planifier le script, assurez-vous que :
 - 
 Installation des dépendances :
 ```
-Bashapt update && apt install ldap-utils -y
+apt update && apt install ldap-utils -y
 ```
 
 ## 📅 Planification (Crontab)
