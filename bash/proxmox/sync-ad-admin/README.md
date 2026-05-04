@@ -43,8 +43,9 @@ Pour une automatisation totale,utilisez la ```crontab```. Il est recommandé d'�
 
 **Aide à la syntaxe Croncrontab.guru :**
 
-Pour vérifier vos expressions. : (crontab.guru)[crontab.guru] 
-Pour générer vos lignes facilement. : (crontab-generator.org)[crontab-generator.org]
+Pour vérifier vos expressions. : [crontab.guru](crontab.guru)
+
+Pour générer vos lignes facilement. : [crontab-generator.org](crontab-generator.org)
 
 */5 * * * *Toutes les 5 minutes (Recommandé)0 * * * *Toutes les heures0 1 * * *Tous les jours à 01:00 du matin
 
