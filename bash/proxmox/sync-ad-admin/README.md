@@ -47,7 +47,21 @@ Pour vérifier vos expressions. : [crontab.guru](https:\\crontab.guru)
 
 Pour générer vos lignes facilement. : [crontab-generator.org](https:\\crontab-generator.org)
 
+```
 */5 * * * *Toutes les 5 minutes (Recommandé)0 * * * *Toutes les heures0 1 * * *Tous les jours à 01:00 du matin
+```
+
+Les 3 lignes pour ta Crontab :
+```
+# 1ère exécution : à :00, :15, :30, :45
+0/15 * * * * /root/script1.sh > /var/log/syncad.log 2>&1
+
+# 2ème exécution : à :05, :20, :35, :50
+5/15 * * * * /root/script2.sh > /var/log/syncad.log 2>&1
+
+# 3ème exécution : à :10, :25, :40, :55
+10/15 * * * * /root/script3.sh > /var/log/syncad.log 2>&1
+```
 
 ## 📜 Exemple de sortie (Log)
 
