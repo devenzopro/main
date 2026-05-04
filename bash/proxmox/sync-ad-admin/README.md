@@ -1,86 +1,81 @@
 # 🔄 Script de synchronisation des administrateurs AD vers un groupe Proxmox
-
-Ce script Bash permet de **synchroniser automatiquement les membres d’un groupe Active Directory** (y compris les membres indirects via les groupes imbriqués) vers un **groupe local dans Proxmox VE**.
-
-Il est conçu pour automatiser la gestion des droits d’accès utilisateurs dans Proxmox à partir d’un annuaire LDAP (comme Active Directory).
+Ce script Bash automatise la synchronisation des membres d'un groupe Active Directory (incluant la récursion via les groupes imbriqués) vers un groupe local Proxmox VE.Il permet de centraliser la gestion de vos droits d'accès Proxmox directement depuis votre annuaire LDAP/AD.
 
 ---
 
-## ⚙️ Fonctionnement
+## ⚙️ FonctionnementLe script suit un flux logique en trois étapes :
+1. **Connexion LDAP** : Authentification sécurisée auprès du contrôleur de domaine (DC).
+2. **Extraction récursive** : Identification de tous les membres du groupe AD (incluant les sous-groupes).
+3. **Provisionnement PVE** : Injection des utilisateurs dans le groupe Proxmox cible via l'outil pveum.
 
-1. Connexion LDAP sécurisée au contrôleur de domaine AD.
-2. Recherche des membres du groupe AD, y compris les groupes imbriqués.
-3. Ajout automatique des comptes utilisateurs dans un groupe local Proxmox via `pveum`.
+--- 
 
----
-
-## 🗂️ Organisation du projet
-
-```bash
-sync-ad-admin/
-├── sync-ad-admin.sh    # Script principal
-├── config.sh    # Fichier de configuration
+🗂️ Organisation du projetPlaintextsync-ad-admin/
+```
+├── sync-ad-admin.sh    # Script logique principal
+├── config.sh           # Variables (Serveur, IDs, Groupes)
 └── README.md           # Documentation
 ```
----
-## 📜 Exemple d’exécution
-```
-[INFO] Lancement de la synchronisation...
-[+] Ajout de adm_tech@ad-internet dans le groupe GG_ADMIN-PVE_CRV-AD-INTERNET
-[INFO] Synchronisation terminée.
-```
----
+
 ## ✅ Prérequis
 
-Proxmox avec l’outil pveum accessible
-Le realm AD doit déjà être configuré dans Proxmox
-Paquet ldap-utils installé (apt install ldap-utils)
-Un compte AD ayant les droits de lecture LDAP
+Avant de planifier le script, assurez-vous que :
+- Le **Realm AD** est déjà configuré dans Proxmox (Datacenter > Permissions > Realms).
+- L'utilitaire ldap-utils est présent sur l'hôte.
+- Un compte de service AD possède les droits de lecture LDAP.
+- 
+Installation des dépendances :
+```
+Bashapt update && apt install ldap-utils -y
+```
+
+## 📅 Planification (Crontab)
+Pour une automatisation totale,utilisez la ```crontab```. Il est recommandé d'écraser le log à chaque passage pour ne garder que l'état de la dernière synchronisation.Configuration recommandée (Toutes les 5 min) Éditez votre crontab avec crontab -e et ajoutez :
 
 ```
-apt update
-apt install ldap-utils -y
+*/5 * * * * /root/sync-ad-admin/sync-ad-admin.sh > /var/log/sync-ad.log 2>&1
 ```
+
+**Détails de la commande :**
+
+- ```>``` Écrase le log précédent (évite la saturation disque).
+- ```2>&1``` : Capture les erreurs (stderr) dans le même fichier.
+
+**Aide à la syntaxe Croncrontab.guru :**
+
+Pour vérifier vos expressions. : (crontab.guru)[crontab.guru] 
+Pour générer vos lignes facilement. : (crontab-generator.org)[crontab-generator.org]
+
+*/5 * * * *Toutes les 5 minutes (Recommandé)0 * * * *Toutes les heures0 1 * * *Tous les jours à 01:00 du matin
+
+##📜 Exemple de sortie (Log)
+
+```
+Plaintext[2026-05-04 16:30:01] [INFO] Lancement de la synchronisation...
+[+] Ajout de adm_tech@ad-internet dans le groupe GG_ADMIN-PVE_CRV-AD-INTERNET
+[INFO] Synchronisation terminée avec succès.
+```
+
+## 🔍 Annexes : Filtres LDAP Proxmox
+Pour optimiser la visibilité des objets dans l'interface Proxmox, vous pouvez utiliser ces filtres dans la configuration du **Realm AD** :
+
+**Filtre utilisateur (avec récursion LDAP_MATCHING_RULE_IN_CHAIN) :**
+
+Permet de ne lister que les membres d'un groupe spécifique et de ses sous-groupes.
+
+```(memberOf:1.2.840.113556.1.4.1941:=CN=GG_ADMIN-PVE_CBG*,OU=TIER1,OU=GROUPES,OU=Comptes de delegation,DC=domaine,DC=fr)```
+
+
+**Filtre de groupe :**
+
+Limite l'importation aux groupes dont le nom commence par une nomenclature précise.
+
+```(&(objectClass=group)(cn=GG_ADMIN-PVE*))```
 
 ---
-## 🧠 Astuce
 
-crontab-generator.org : vous n'avez qu'à sélectionner vos besoins pour la fréquence d'exécution et l'outil va générer la bonne ligne de crontab.
+**Note** : Veillez à bien tester votre fichier config.sh manuellement avant d'activer la tâche Cron.rd (stdout), donc les erreurs seront aussi écrites dans ton fichier de log unique.
 
-crontab.guru : vous pouvez indiquer votre ligne de crontab (sans la commande) et l'outil va la traduire sous forme de texte. C'est très pratique pour vérifier la syntaxe de la tâche cron.
-
-Ce script peut être planifié avec cron pour une mise à jour régulière :
-
-```0 * * * * /root/sync-ad-admin/sync-ad-admin.sh >> /var/log/sync-ad.log 2>&1```
-
-✅ Signification détaillée (cron)
-
-```
-*    *    *    *    * /root/sync-ad-admin/sync-ad-admin.sh >> /var/log/sync-ad.log 2>&1
-│    │    │    │    │
-│    │    │    │    └──── Jour de la semaine (0-6 → dimanche à samedi)
-│    │    │    └──────── Mois (1-12)
-│    │    └──────────── Jour du mois (1-31)
-│    └───────────────── Heure (0-23)
-└────────────────────── Minute (0-59)
-```
-🕑 Cette ligne :
-
-```0 * * * * /root/sync-ad-admin/sync-ad-admin.sh >> /var/log/sync-ad.log 2>&1```
-
-Signifie : à la minute 0 de chaque heure
-Donc : toutes les heures, à xx:00 (00:00, 01:00, 02:00… 23:00)
-
-🔁 Résumé des cas fréquents
-```
-Expression                cron	Signification
-
-0 * * * *	                Toutes les heures à xx:00
-*/5 * * * *             	Toutes les 5 minutes
-0 1 * * *	                Tous les jours à 01:00
-0 1 * * 1	                Tous les lundis à 01:00
-0 1 */2 * *             	Tous les 2 jours à 01:00
-```
 Pour information : 
 
 Proxmox Active Direcory Server : User Filter ```(memberOf:1.2.840.113556.1.4.1941:=CN=GG_ADMIN-PVE_CBG*,OU=TIER1,OU=GROUPES,OU=Comptes de delegation,DC=domaine,DC=fr)``` pausibilé d'en maitre a la suite
