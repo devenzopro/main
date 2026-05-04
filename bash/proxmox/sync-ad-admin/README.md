@@ -43,13 +43,13 @@ Pour une automatisation totale,utilisez la ```crontab```. Il est recommandé d'�
 
 **Aide à la syntaxe Croncrontab.guru :**
 
-Pour vérifier vos expressions. : [crontab.guru](crontab.guru)
+Pour vérifier vos expressions. : [crontab.guru](https:\\crontab.guru)
 
-Pour générer vos lignes facilement. : [crontab-generator.org](crontab-generator.org)
+Pour générer vos lignes facilement. : [crontab-generator.org](https:\\crontab-generator.org)
 
 */5 * * * *Toutes les 5 minutes (Recommandé)0 * * * *Toutes les heures0 1 * * *Tous les jours à 01:00 du matin
 
-##📜 Exemple de sortie (Log)
+## 📜 Exemple de sortie (Log)
 
 ```
 Plaintext[2026-05-04 16:30:01] [INFO] Lancement de la synchronisation...
