@@ -54,13 +54,13 @@ Pour générer vos lignes facilement. : [crontab-generator.org](https:\\crontab-
 Les 3 lignes pour ta Crontab :
 ```
 # 1ère exécution : à :00, :15, :30, :45
-0/15 * * * * /root/script1.sh > /var/log/syncad.log 2>&1
+0/15 * * * * /root/sync-ad-admin/sync-ad-admin.sh > /var/log/sync-ad.log 2>&1
 
 # 2ème exécution : à :05, :20, :35, :50
-5/15 * * * * /root/script2.sh > /var/log/syncad.log 2>&1
+5/15 * * * * /root/sync-ad-admin/sync-ad-admin.sh > /var/log/sync-ad.log 2>&1
 
 # 3ème exécution : à :10, :25, :40, :55
-10/15 * * * * /root/script3.sh > /var/log/syncad.log 2>&1
+10/15 * * * * /root/sync-ad-admin/sync-ad-admin.sh > /var/log/sync-ad.log 2>&1
 ```
 
 ## 📜 Exemple de sortie (Log)
