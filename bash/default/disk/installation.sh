@@ -1,4 +1,4 @@
-# curl -sSL https://raw.githubusercontent.com/devenzopro/main/scripts/bash/default/disk/installation.sh | sudo bash*
+# curl -sSL https://raw.githubusercontent.com/devenzopro/main/scripts/bash/default/disk/installation.sh | sudo bash
 
 echo "Installation disk démarage !"
 echo " "
